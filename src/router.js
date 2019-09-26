@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import Repositories from "./views/Repositories.vue";
+import ProjectRepo from "./views/ProjectRepo.vue";
 
 Vue.use(Router);
 
@@ -13,11 +15,27 @@ export default new Router({
     },
     {
       path: "/:username",
-      name: "user",
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "user" */ "./views/User.vue")
+      component: () =>
+        import(/* webpackChunkName: "user" */ "./views/User.vue"),
+      children: [
+        {
+          // UserProfile will be rendered inside User's <router-view>
+          // when /user/:id/profile is matched
+          path: "",
+          name: "user",
+          component: Repositories
+        },
+        {
+          // UserProfile will be rendered inside User's <router-view>
+          // when /user/:id/profile is matched
+          path: ":repo",
+          component: ProjectRepo,
+          props: route => ({ params: route.params })
+        }
+      ]
     }
   ]
 });

@@ -1,5 +1,5 @@
 <template>
-  <a href class="card">
+  <a :href="href" class="card">
     <div class="repo">{{ repo.name }}</div>
   </a>
 </template>
@@ -8,7 +8,13 @@
 export default {
   props: {
     repo: {
+      type: Object,
       required: true
+    }
+  },
+  computed: {
+    href: function() {
+      return `#/${this.repo.full_name}`;
     }
   }
 };
