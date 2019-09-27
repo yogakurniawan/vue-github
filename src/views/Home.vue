@@ -42,6 +42,7 @@ export default {
 
 <style lang="scss" scoped>
 .home {
+  padding: 1rem;
   height: 100vh;
   width: 100vw;
   display: flex;

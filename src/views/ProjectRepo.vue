@@ -1,14 +1,25 @@
 <template>
-  <vue-markdown class="container" :source="content"></vue-markdown>
+  <vue-markdown v-if="loaded" class="container" :source="content"></vue-markdown>
+  <div v-else class="container">
+    <content-loader class="content-loader"></content-loader>
+    <content-loader class="content-loader"></content-loader>
+  </div>
 </template>
 
 <script>
 import VueMarkdown from "vue-markdown";
 import axios from "axios";
+import ContentLoader from "@/components/ContentLoader.vue";
 
 export default {
   components: {
+    ContentLoader,
     VueMarkdown
+  },
+  computed: {
+    loaded: function() {
+      return !!this.content;
+    }
   },
   props: {
     params: {
@@ -27,7 +38,6 @@ export default {
         const url = `https://api.github.com/repos/${this.params.username}/${this.params.repo}/readme`;
         const response = await axios.get(url);
         this.content = atob(response.data.content);
-        debugger;
       } catch (error) {
         this.content = "# No Readme File";
       }
@@ -41,6 +51,11 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  margin-top: 6rem;
+  padding: 1rem;
+  width: 100%;
+  @media screen and (min-width: 768px) {
+    width: 50%;
+  }
+  margin: 6rem auto 0 auto;
 }
 </style>

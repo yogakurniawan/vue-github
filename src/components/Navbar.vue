@@ -1,9 +1,7 @@
 <template>
   <div class="navbar">
     <div class="container">
-      <button>
-        <img src="../assets/home.png" />
-      </button>
+      <img class="home" @click="goHome" src="../assets/arrow-left.png" />
       <span class="title">{{ name }}'s Projects</span>
     </div>
   </div>
@@ -16,6 +14,11 @@ export default {
       type: String,
       required: true
     }
+  },
+  methods: {
+    goHome() {
+      this.$router.back();
+    }
   }
 };
 </script>
@@ -23,10 +26,14 @@ export default {
 <style lang="scss" scoped>
 .container {
   display: flex;
-  img {
-    width: 30px;
-    margin-right: 1rem;
+}
+
+.home {
+  &:hover {
+    cursor: pointer;
   }
+  width: 30px;
+  margin-right: 1rem;
 }
 
 .navbar {

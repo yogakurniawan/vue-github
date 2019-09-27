@@ -39,7 +39,10 @@ export default {
 .search-container {
   position: relative;
   height: 54px;
-  width: 50%;
+  width: 100%;
+  @media screen and (min-width: 768px) {
+    width: 50%;
+  }
 }
 
 .search-icon {
