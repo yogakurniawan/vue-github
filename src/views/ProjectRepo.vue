@@ -1,5 +1,10 @@
 <template>
-  <vue-markdown v-if="loaded" class="container" :source="content"></vue-markdown>
+  <div v-if="loaded" class="container">
+    <div class="link">
+      <router-link :to="repositoriesLink">← Back to Repositories</router-link>
+    </div>
+    <vue-markdown :source="content"></vue-markdown>
+  </div>
   <div v-else class="container">
     <content-loader class="content-loader"></content-loader>
     <content-loader class="content-loader"></content-loader>
@@ -19,12 +24,14 @@ export default {
   computed: {
     loaded: function() {
       return !!this.content;
+    },
+    repositoriesLink: function() {
+      return `/${this.params.username}`;
     }
   },
   props: {
     params: {
-      type: Object,
-      default: "Vue!"
+      type: Object
     }
   },
   data() {
@@ -33,6 +40,9 @@ export default {
     };
   },
   methods: {
+    goToUserPage() {
+      this.$router.push({ name: "user" });
+    },
     fetchReadme: async function() {
       try {
         const url = `https://api.github.com/repos/${this.params.username}/${this.params.repo}/readme`;
@@ -50,6 +60,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.link {
+  margin-bottom: 2rem;
+}
+
 .container {
   padding: 1rem;
   width: 100%;

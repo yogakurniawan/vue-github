@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <div v-if="loaded">
+    <div v-if="loaded" class="responsive">
       <div class="repo-list" v-for="repo in repositories" :key="repo.id">
         <card :repo="repo"></card>
       </div>
     </div>
-    <div v-else>
-      <content-loader class="content-loader"></content-loader>
-      <content-loader class="content-loader"></content-loader>
+    <div class="content-loader responsive" v-else>
+      <content-loader></content-loader>
+      <content-loader></content-loader>
     </div>
   </div>
 </template>
@@ -52,22 +52,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.content-loader {
+.responsive {
   margin: auto;
-  display: block;
   width: 100%;
   @media screen and (min-width: 768px) {
     width: 50%;
   }
 }
 
+.content-loader {
+  display: block;
+}
+
 .container {
-  margin-top: 6rem;
-  margin-bottom: 3rem;
+  margin: 6rem auto 3rem auto;
+  padding: 1rem;
 }
 
 .repo-list {
   margin: 1rem auto 0 auto;
-  width: 50%;
 }
 </style>
